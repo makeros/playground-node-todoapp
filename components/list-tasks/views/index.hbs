@@ -1,0 +1,41 @@
+<h2>{{call.title}}</h2>
+{{> list-tasks/views/input-task}}
+New public tasks: <span id="new-task-count">0</span>
+<ul id="tasks-list">
+{{#each list}}
+  {{> list-tasks/views/list-item}}
+{{/each}}
+<script>
+  const $taskList = document.querySelector('#tasks-list')
+  const $newTaskCount = document.querySelector('#new-task-count')
+  const newestTask = $taskList.querySelectorAll('li.task-public')[0].dataset.taskId
+  const longPoolingNewTasks = function () {
+    fetch(`/api/newest-tasks/${newestTask}`, {
+        method: 'GET',
+        credentials: "same-origin"
+      })
+      .then(response => response.json())
+      .then(response => {
+        $newTaskCount.textContent = response.length
+        console.log('complete task', response);
+        longPoolingNewTasks()
+      })
+  }
+
+  $taskList.addEventListener('change', function (e) {
+    var $targetCheckbox = e.target
+    if ($targetCheckbox.name === 'complete') {
+      fetch(`/api/task/complete/${$targetCheckbox.value}`, {
+        method: 'PUT',
+        credentials: "same-origin"
+      })
+      .then(response => response.json())
+      .then(response => {
+        console.log('complete task', response);
+      })
+    }
+  })
+
+  longPoolingNewTasks()
+</script>
+</ul>

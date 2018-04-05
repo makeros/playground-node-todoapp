@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: beige;
+}
+
+.app-header {
+  position: fixed;
+  background-color: aliceblue;
+  display: block;
+  width: 100%;
+}
+.container {
+  width: 900px;
+  padding: 30px 20px;
+  margin: auto;
+}

@@ -1,0 +1,11 @@
+<li data-task-id="{{id}}" class="{{#if public }} task-public {{/if}}">
+  <h2>{{title}}</h2>
+  {{#if public }}
+  public task
+  {{else}}
+  <input name="complete" id="task-{{id}}" type="checkbox" value="{{id}}" {{#if completed}} checked {{/if}} />
+  <label for="task-{{id}}">Completed</label>{{/if}}
+  {{#if removable}}
+  <a href="/remove/{{id}}">remove</a>
+  {{/if}}
+</li>
